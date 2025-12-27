@@ -32,27 +32,38 @@
 
 <br><br>
 
+<label>Preset de exportación:</label>
+<select id="preset">
+  <option value="instagram">Instagram (recomendado)</option>
+  <option value="high">Alta calidad</option>
+  <option value="light">Ligero</option>
+</select>
+
+<br><br>
+
 <label>Música (opcional):</label>
 <input type="file" id="musicInput" accept="audio/*" />
 
 <br><br>
 
 <button id="processBtn">Procesar vídeo</button>
+<button id="saveProject">Guardar proyecto</button>
+<input type="file" id="loadProject" accept=".json" />
 
 <p id="status"></p>
 
 <video id="preview" controls></video>
 
-<!-- TIMELINE -->
 <div id="timelineContainer">
   <div id="timeline">
-    <div id="selection"></div>
+    <div id="selection">
+      <div class="handle left"></div>
+      <div class="handle right"></div>
+    </div>
     <div id="playhead"></div>
   </div>
 
   <div class="timeline-buttons">
-    <button id="setIn">IN</button>
-    <button id="setOut">OUT</button>
     <button id="addCut">Añadir corte</button>
     <button id="clearCuts">Limpiar</button>
   </div>
