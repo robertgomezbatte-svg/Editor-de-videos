@@ -1,4 +1,4 @@
-Vconst { createFFmpeg, fetchFile } = FFmpeg;
+const { createFFmpeg, fetchFile } = FFmpeg;
 const ffmpeg = createFFmpeg({ log: true });
 
 const videoInput = document.getElementById("videoInput");
