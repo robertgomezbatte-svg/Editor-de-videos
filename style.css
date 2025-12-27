@@ -20,3 +20,45 @@ video {
   margin-top: 20px;
   max-width: 90%;
 }
+#timelineContainer {
+  margin-top: 30px;
+}
+
+#timeline {
+  position: relative;
+  width: 80%;
+  height: 12px;
+  background: #444;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+#selection {
+  position: absolute;
+  height: 100%;
+  background: rgba(0, 150, 255, 0.5);
+  left: 0;
+  width: 0;
+}
+
+#playhead {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 20px;
+  background: red;
+  left: 0;
+}
+
+.timeline-buttons button {
+  margin: 5px;
+}
+
+#cutsList {
+  list-style: none;
+  padding: 0;
+}
+
+#cutsList li {
+  margin: 5px 0;
+}
