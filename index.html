@@ -7,68 +7,92 @@
 </head>
 <body>
 
-<h1>Mini Editor de Reels</h1>
+<div class="app">
 
-<input type="file" id="videoInput" accept="video/*" />
-<br><br>
+  <header class="topbar">
+    <h1>Mini Reels Editor</h1>
+  </header>
 
-<label>Velocidad:</label>
-<select id="speed">
-  <option value="1">Normal</option>
-  <option value="1.25">1.25x</option>
-  <option value="1.5">1.5x</option>
-  <option value="2">2x</option>
-</select>
+  <div class="workspace">
 
-<br><br>
+    <!-- PANEL IZQUIERDO -->
+    <div class="controls">
 
-<label>Transición:</label>
-<select id="transition">
-  <option value="none">Ninguna</option>
-  <option value="bounce">Rebote</option>
-  <option value="fade">Fade negro</option>
-  <option value="flash">Flash</option>
-</select>
+      <div class="control-group">
+        <label>Vídeo</label>
+        <input type="file" id="videoInput" accept="video/*" />
+      </div>
 
-<br><br>
+      <div class="control-group">
+        <label>Velocidad</label>
+        <select id="speed">
+          <option value="1">Normal</option>
+          <option value="1.25">1.25x</option>
+          <option value="1.5">1.5x</option>
+          <option value="2">2x</option>
+        </select>
+      </div>
 
-<label>Preset de exportación:</label>
-<select id="preset">
-  <option value="instagram">Instagram (recomendado)</option>
-  <option value="high">Alta calidad</option>
-  <option value="light">Ligero</option>
-</select>
+      <div class="control-group">
+        <label>Transición</label>
+        <select id="transition">
+          <option value="none">Ninguna</option>
+          <option value="bounce">Rebote</option>
+          <option value="fade">Fade</option>
+          <option value="flash">Flash</option>
+        </select>
+      </div>
 
-<br><br>
+      <div class="control-group">
+        <label>Preset exportación</label>
+        <select id="preset">
+          <option value="instagram">Instagram</option>
+          <option value="high">Alta calidad</option>
+          <option value="light">Ligero</option>
+        </select>
+      </div>
 
-<label>Música (opcional):</label>
-<input type="file" id="musicInput" accept="audio/*" />
+      <div class="control-group">
+        <label>Música</label>
+        <input type="file" id="musicInput" accept="audio/*" />
+      </div>
 
-<br><br>
+      <div class="buttons">
+        <button id="processBtn" class="primary">Exportar</button>
+        <button id="saveProject">Guardar</button>
+        <input type="file" id="loadProject" accept=".json" />
+      </div>
 
-<button id="processBtn">Procesar vídeo</button>
-<button id="saveProject">Guardar proyecto</button>
-<input type="file" id="loadProject" accept=".json" />
+      <p id="status"></p>
 
-<p id="status"></p>
-
-<video id="preview" controls></video>
-
-<div id="timelineContainer">
-  <div id="timeline">
-    <div id="selection">
-      <div class="handle left"></div>
-      <div class="handle right"></div>
     </div>
-    <div id="playhead"></div>
+
+    <!-- PANEL DERECHO -->
+    <div class="editor">
+
+      <video id="preview" controls></video>
+
+      <div id="timelineContainer">
+        <div id="timeline">
+          <div id="selection">
+            <div class="handle left"></div>
+            <div class="handle right"></div>
+          </div>
+          <div id="playhead"></div>
+        </div>
+
+        <div class="timeline-buttons">
+          <button id="addCut">Añadir corte</button>
+          <button id="clearCuts">Limpiar</button>
+        </div>
+
+        <ul id="cutsList"></ul>
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="timeline-buttons">
-    <button id="addCut">Añadir corte</button>
-    <button id="clearCuts">Limpiar</button>
-  </div>
-
-  <ul id="cutsList"></ul>
 </div>
 
 <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
