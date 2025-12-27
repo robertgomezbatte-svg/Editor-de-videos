@@ -84,3 +84,67 @@ processBtn.onclick = async () => {
   preview.src = videoURL;
   status.innerText = "Vídeo listo (calidad alta)";
 };
+let duration = 0;
+let inPoint = 0;
+let outPoint = 0;
+let cuts = [];
+
+preview.addEventListener("loadedmetadata", () => {
+  duration = preview.duration;
+});
+
+preview.addEventListener("timeupdate", () => {
+  const percent = preview.currentTime / duration;
+  document.getElementById("playhead").style.left = `${percent * 100}%`;
+});
+
+const timeline = document.getElementById("timeline");
+const selection = document.getElementById("selection");
+
+timeline.addEventListener("click", (e) => {
+  const rect = timeline.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  preview.currentTime = percent * duration;
+});
+
+document.getElementById("setIn").onclick = () => {
+  inPoint = preview.currentTime;
+  updateSelection();
+};
+
+document.getElementById("setOut").onclick = () => {
+  outPoint = preview.currentTime;
+  updateSelection();
+};
+
+document.getElementById("addCut").onclick = () => {
+  if (outPoint > inPoint) {
+    cuts.push([inPoint, outPoint]);
+    renderCuts();
+  }
+};
+
+document.getElementById("clearCuts").onclick = () => {
+  cuts = [];
+  renderCuts();
+  selection.style.width = "0";
+};
+
+function updateSelection() {
+  const start = (inPoint / duration) * 100;
+  const end = (outPoint / duration) * 100;
+  selection.style.left = `${start}%`;
+  selection.style.width = `${end - start}%`;
+}
+
+function renderCuts() {
+  const list = document.getElementById("cutsList");
+  list.innerHTML = "";
+
+  cuts.forEach((cut, i) => {
+    const li = document.createElement("li");
+    li.textContent = `Corte ${i + 1}: ${cut[0].toFixed(2)}s → ${cut[1].toFixed(2)}s`;
+    list.appendChild(li);
+  });
+}
+
