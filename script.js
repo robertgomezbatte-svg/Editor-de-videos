@@ -14,15 +14,16 @@ let inPoint = 0;
 let outPoint = 0;
 let cuts = [];
 
-/* =========================
+/* ======================
    PREVIEW & TIMELINE
-========================= */
+====================== */
 
 preview.addEventListener("loadedmetadata", () => {
   duration = preview.duration;
 });
 
 preview.addEventListener("timeupdate", () => {
+  if (!duration) return;
   const percent = preview.currentTime / duration;
   document.getElementById("playhead").style.left = `${percent * 100}%`;
 });
@@ -77,9 +78,9 @@ function renderCuts() {
   });
 }
 
-/* =========================
+/* ======================
    PROCESAR VÍDEO
-========================= */
+====================== */
 
 processBtn.onclick = async () => {
   if (!videoInput.files.length) {
@@ -101,15 +102,15 @@ processBtn.onclick = async () => {
     cuts.push([0, duration]);
   }
 
-  // Crear archivo de concatenación
-  let concatFile = "";
-  for (let i = 0; i < cuts.length; i++) {
-    concatFile += `file input.mp4\n`;
-    concatFile += `inpoint ${cuts[i][0]}\n`;
-    concatFile += `outpoint ${cuts[i][1]}\n`;
-  }
+  // Archivo concat con in/out reales
+  let concatTxt = "";
+  cuts.forEach(cut => {
+    concatTxt += `file input.mp4\n`;
+    concatTxt += `inpoint ${cut[0]}\n`;
+    concatTxt += `outpoint ${cut[1]}\n`;
+  });
 
-  ffmpeg.FS("writeFile", "cuts.txt", concatFile);
+  ffmpeg.FS("writeFile", "cuts.txt", concatTxt);
 
   const speed = speedSelect.value;
   const transition = transitionSelect.value;
@@ -171,9 +172,7 @@ processBtn.onclick = async () => {
   await ffmpeg.run(...command);
 
   const data = ffmpeg.FS("readFile", "output.mp4");
-  const videoURL = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
+  preview.src = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
 
-  preview.src = videoURL;
-  status.innerText = "Vídeo listo (cortes aplicados, calidad máxima)";
+  status.innerText = "Vídeo listo · cortes aplicados · calidad máxima";
 };
-
