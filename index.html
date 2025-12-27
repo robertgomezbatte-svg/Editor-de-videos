@@ -56,6 +56,20 @@
         <label>Música</label>
         <input type="file" id="musicInput" accept="audio/*" />
       </div>
+      
+<div class="control-group">
+  <label>Texto</label>
+
+  <input type="text" id="textInput" placeholder="Escribe tu texto..." />
+
+  <label class="small">Tamaño</label>
+  <input type="range" id="textSize" min="16" max="80" value="36" />
+
+  <label class="small">Color</label>
+  <input type="color" id="textColor" value="#ffffff" />
+
+  <button id="addTextBtn">Añadir texto</button>
+</div>
 
       <div class="buttons">
         <button id="processBtn" class="primary">Exportar</button>
@@ -70,7 +84,10 @@
     <!-- PANEL DERECHO -->
     <div class="editor">
 
-      <video id="preview" controls></video>
+    <div class="video-wrapper">
+  <video id="preview" controls></video>
+  <div id="textLayer"></div>
+</div>
 
       <div id="timelineContainer">
         <div id="timeline">
