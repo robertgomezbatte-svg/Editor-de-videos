@@ -177,3 +177,29 @@ video {
   margin-top: 6px;
 }
 
+/* VIDEO + TEXT OVERLAY */
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+#textLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.text-item {
+  position: absolute;
+  color: white;
+  font-weight: 700;
+  cursor: move;
+  user-select: none;
+  pointer-events: auto;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
