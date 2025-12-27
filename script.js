@@ -105,3 +105,46 @@ function getPreset(preset) {
   if (preset === "light") return { crf: "23", preset: "veryfast" };
   return { crf: "18", preset: "slow" }; // Instagram
 }
+/* ======================
+   TEXT OVERLAYS
+====================== */
+
+const textInput = document.getElementById("textInput");
+const textSizeInput = document.getElementById("textSize");
+const textColorInput = document.getElementById("textColor");
+const addTextBtn = document.getElementById("addTextBtn");
+const textLayer = document.getElementById("textLayer");
+
+let texts = []; 
+// { id, text, x, y, size, color }
+
+function createTextElement(obj) {
+  const el = document.createElement("div");
+  el.className = "text-item";
+  el.innerText = obj.text;
+  el.style.fontSize = obj.size + "px";
+  el.style.color = obj.color;
+  el.style.left = obj.x * 100 + "%";
+  el.style.top = obj.y * 100 + "%";
+  el.dataset.id = obj.id;
+
+  makeDraggable(el);
+  textLayer.appendChild(el);
+}
+
+addTextBtn.addEventListener("click", () => {
+  if (!textInput.value.trim()) return;
+
+  const obj = {
+    id: crypto.randomUUID(),
+    text: textInput.value,
+    x: 0.5,
+    y: 0.5,
+    size: Number(textSizeInput.value),
+    color: textColorInput.value
+  };
+
+  texts.push(obj);
+  createTextElement(obj);
+});
+
