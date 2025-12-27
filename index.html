@@ -45,6 +45,21 @@
 
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
   <script src="script.js"></script>
+<div id="timelineContainer">
+  <div id="timeline">
+    <div id="selection"></div>
+    <div id="playhead"></div>
+  </div>
+
+  <div class="timeline-buttons">
+    <button id="setIn">IN</button>
+    <button id="setOut">OUT</button>
+    <button id="addCut">Añadir corte</button>
+    <button id="clearCuts">Limpiar</button>
+  </div>
+
+  <ul id="cutsList"></ul>
+</div>
 
 </body>
 </html>
