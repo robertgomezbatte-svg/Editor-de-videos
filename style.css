@@ -23,10 +23,6 @@ video {
 
 /* TIMELINE */
 
-#timelineContainer {
-  margin-top: 30px;
-}
-
 #timeline {
   position: relative;
   width: 80%;
@@ -39,10 +35,19 @@ video {
 #selection {
   position: absolute;
   height: 100%;
-  background: rgba(0, 150, 255, 0.5);
-  left: 0;
-  width: 0;
+  background: rgba(0,150,255,0.5);
 }
+
+.handle {
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  background: #00f;
+  cursor: ew-resize;
+}
+
+.handle.left { left: 0; }
+.handle.right { right: 0; }
 
 #playhead {
   position: absolute;
@@ -50,11 +55,6 @@ video {
   width: 2px;
   height: 20px;
   background: red;
-  left: 0;
-}
-
-.timeline-buttons button {
-  margin: 5px;
 }
 
 #cutsList {
@@ -62,6 +62,3 @@ video {
   padding: 0;
 }
 
-#cutsList li {
-  margin: 5px 0;
-}
