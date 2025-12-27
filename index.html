@@ -7,44 +7,43 @@
 </head>
 <body>
 
-  <h1>Mini Editor de Reels</h1>
+<h1>Mini Editor de Reels</h1>
 
-  <input type="file" id="videoInput" accept="video/*" />
-  <br><br>
+<input type="file" id="videoInput" accept="video/*" />
+<br><br>
 
-  <label>Velocidad:</label>
-  <select id="speed">
-    <option value="1">Normal</option>
-    <option value="1.25">1.25x</option>
-    <option value="1.5">1.5x</option>
-    <option value="2">2x</option>
-  </select>
+<label>Velocidad:</label>
+<select id="speed">
+  <option value="1">Normal</option>
+  <option value="1.25">1.25x</option>
+  <option value="1.5">1.5x</option>
+  <option value="2">2x</option>
+</select>
 
-  <br><br>
+<br><br>
 
-  <label>Transición:</label>
-  <select id="transition">
-    <option value="none">Ninguna</option>
-    <option value="bounce">Rebote</option>
-    <option value="fade">Fade negro</option>
-    <option value="flash">Flash</option>
-  </select>
+<label>Transición:</label>
+<select id="transition">
+  <option value="none">Ninguna</option>
+  <option value="bounce">Rebote</option>
+  <option value="fade">Fade negro</option>
+  <option value="flash">Flash</option>
+</select>
 
-  <br><br>
+<br><br>
 
-  <label>Música (opcional):</label>
-  <input type="file" id="musicInput" accept="audio/*" />
+<label>Música (opcional):</label>
+<input type="file" id="musicInput" accept="audio/*" />
 
-  <br><br>
+<br><br>
 
-  <button id="processBtn">Procesar vídeo</button>
+<button id="processBtn">Procesar vídeo</button>
 
-  <p id="status"></p>
+<p id="status"></p>
 
-  <video id="preview" controls></video>
+<video id="preview" controls></video>
 
-  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
-  <script src="script.js"></script>
+<!-- TIMELINE -->
 <div id="timelineContainer">
   <div id="timeline">
     <div id="selection"></div>
@@ -60,6 +59,9 @@
 
   <ul id="cutsList"></ul>
 </div>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
