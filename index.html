@@ -2,21 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mini Reels Editor</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <div class="app">
-
   <header class="topbar">
     <h1>Mini Reels Editor</h1>
+    <div class="topbar-right">
+      <span id="timeLabel">00:00.00</span>
+    </div>
   </header>
 
   <div class="workspace">
-
     <!-- PANEL IZQUIERDO -->
-    <div class="controls">
+    <aside class="controls">
 
       <div class="control-group">
         <label>Vídeo</label>
@@ -37,85 +39,213 @@
         <label>Transición</label>
         <select id="transition">
           <option value="none">Ninguna</option>
-          <option value="bounce">Rebote</option>
           <option value="fade">Fade</option>
           <option value="flash">Flash</option>
+          <option value="bounce">Rebote (preview)</option>
         </select>
+        <div class="help">
+          En exportación: fade/flash se aplica entre cortes. Rebote solo afecta preview.
+        </div>
       </div>
 
       <div class="control-group">
         <label>Preset exportación</label>
         <select id="preset">
-          <option value="instagram">Instagram</option>
+          <option value="instagram">Instagram (1080x1920)</option>
           <option value="high">Alta calidad</option>
           <option value="light">Ligero</option>
         </select>
       </div>
 
-      <div class="control-group">
-        <label>Música</label>
-        <input type="file" id="musicInput" accept="audio/*" />
+      <!-- AUDIO POR TRAMOS -->
+      <div class="panel">
+        <div class="panel-title">Audio por tramos</div>
+
+        <div class="control-group">
+          <label>Añadir clip de audio</label>
+          <input type="file" id="audioClipInput" accept="audio/*" />
+        </div>
+
+        <div class="row">
+          <button id="addAudioClipBtn">Añadir a lista</button>
+          <button id="clearAudioBtn" class="danger">Limpiar</button>
+        </div>
+
+        <div class="audio-editor">
+          <div class="row">
+            <label class="small">Clip seleccionado</label>
+            <select id="audioClipSelect"></select>
+          </div>
+
+          <div class="row">
+            <button id="setAudioStart">Inicio = playhead</button>
+            <button id="setAudioEnd">Fin = playhead</button>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label class="small">Inicio (s)</label>
+              <input type="number" id="audioStart" step="0.01" min="0" />
+            </div>
+            <div>
+              <label class="small">Fin (s)</label>
+              <input type="number" id="audioEnd" step="0.01" min="0" />
+            </div>
+          </div>
+
+          <div>
+            <label class="small">Volumen</label>
+            <input type="range" id="audioVol" min="0" max="2" step="0.01" />
+            <div class="small muted" id="audioVolLabel"></div>
+          </div>
+
+          <div class="row">
+            <button id="deleteAudioClip" class="danger">Eliminar clip</button>
+          </div>
+        </div>
+
+        <ul id="audioList" class="list"></ul>
       </div>
 
       <!-- TEXTO -->
-      <div class="control-group">
-        <label>Texto</label>
+      <div class="panel">
+        <div class="panel-title">Texto libre</div>
 
-        <input type="text" id="textInput" placeholder="Texto seleccionado..." />
+        <div class="control-group">
+          <label>Texto</label>
+          <input type="text" id="textInput" placeholder="Texto seleccionado..." />
+        </div>
 
-        <label class="small">Tamaño</label>
-        <input type="range" id="textSize" min="16" max="80" />
+        <div class="grid2">
+          <div>
+            <label class="small">Tamaño</label>
+            <input type="range" id="textSize" min="16" max="80" />
+          </div>
+          <div>
+            <label class="small">Color</label>
+            <input type="color" id="textColor" />
+          </div>
+        </div>
 
-        <label class="small">Color</label>
-        <input type="color" id="textColor" />
+        <div class="grid2">
+          <div>
+            <label class="small">Aparece (s)</label>
+            <input type="number" id="textIn" step="0.01" min="0" />
+          </div>
+          <div>
+            <label class="small">Desaparece (s)</label>
+            <input type="number" id="textOut" step="0.01" min="0" />
+          </div>
+        </div>
 
-        <button id="addTextBtn">Añadir texto</button>
-        <button id="deleteTextBtn">Eliminar texto</button>
+        <div class="row">
+          <button id="setTextIn">In = playhead</button>
+          <button id="setTextOut">Out = playhead</button>
+        </div>
+
+        <div class="row">
+          <button id="addTextBtn">Añadir texto</button>
+          <button id="deleteTextBtn" class="danger">Eliminar texto</button>
+        </div>
+
+        <div class="help">
+          El texto se renderiza en exportación (burn-in) y también se ve en preview como overlay.
+        </div>
       </div>
 
+      <!-- SUBTÍTULOS MANUALES -->
+      <div class="panel">
+        <div class="panel-title">Subtítulos manuales</div>
+
+        <div class="row">
+          <input type="file" id="srtInput" accept=".srt" />
+          <button id="exportSrt">Exportar .srt</button>
+        </div>
+
+        <div class="row">
+          <button id="addSubtitle">Añadir línea</button>
+          <button id="clearSubtitles" class="danger">Limpiar</button>
+        </div>
+
+        <div class="subtitle-editor">
+          <div class="row">
+            <label class="small">Línea seleccionada</label>
+            <select id="subtitleSelect"></select>
+          </div>
+
+          <div class="row">
+            <button id="setSubStart">Inicio = playhead</button>
+            <button id="setSubEnd">Fin = playhead</button>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label class="small">Inicio (s)</label>
+              <input type="number" id="subStart" step="0.01" min="0" />
+            </div>
+            <div>
+              <label class="small">Fin (s)</label>
+              <input type="number" id="subEnd" step="0.01" min="0" />
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="small">Texto</label>
+            <textarea id="subText" rows="3" placeholder="Escribe el subtítulo..."></textarea>
+          </div>
+
+          <div class="row">
+            <button id="deleteSubtitle" class="danger">Eliminar línea</button>
+          </div>
+        </div>
+
+        <ul id="subtitlesList" class="list"></ul>
+      </div>
+
+      <!-- BOTONES -->
       <div class="buttons">
         <button id="processBtn" class="primary">Exportar</button>
         <button id="saveProject">Guardar</button>
         <input type="file" id="loadProject" accept=".json" />
       </div>
 
-      <p id="status"></p>
-
-    </div>
+      <p id="status" class="status"></p>
+    </aside>
 
     <!-- PANEL DERECHO -->
-    <div class="editor">
-
+    <main class="editor">
       <div class="video-wrapper">
         <video id="preview" controls></video>
-        <div id="textLayer"></div>
+        <div id="overlayLayer">
+          <div id="textLayer"></div>
+          <div id="subtitleLayer"></div>
+        </div>
       </div>
 
-      <div id="timelineContainer">
+      <section id="timelineContainer">
+        <div class="timeline-header">
+          <div class="muted small">Timeline (IN/OUT + playhead + cortes)</div>
+          <div class="timeline-actions">
+            <button id="addCut">Añadir corte</button>
+            <button id="clearCuts" class="danger">Limpiar</button>
+          </div>
+        </div>
+
         <div id="timeline">
           <div id="selection">
-            <div class="handle left"></div>
-            <div class="handle right"></div>
+            <div class="handle left" title="IN"></div>
+            <div class="handle right" title="OUT"></div>
           </div>
-          <div id="playhead"></div>
+          <div id="playhead" title="Playhead"></div>
         </div>
 
-        <div class="timeline-buttons">
-          <button id="addCut">Añadir corte</button>
-          <button id="clearCuts">Limpiar</button>
-        </div>
-
-        <ul id="cutsList"></ul>
-      </div>
-
-    </div>
-
+        <ul id="cutsList" class="list"></ul>
+      </section>
+    </main>
   </div>
-
 </div>
 
 <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
