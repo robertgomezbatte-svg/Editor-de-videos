@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Mini Editor de Reels</title>
+  <title>Mini Reels Editor</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -56,20 +56,22 @@
         <label>Música</label>
         <input type="file" id="musicInput" accept="audio/*" />
       </div>
-      
-<div class="control-group">
-  <label>Texto</label>
 
-  <input type="text" id="textInput" placeholder="Escribe tu texto..." />
+      <!-- TEXTO -->
+      <div class="control-group">
+        <label>Texto</label>
 
-  <label class="small">Tamaño</label>
-  <input type="range" id="textSize" min="16" max="80" value="36" />
+        <input type="text" id="textInput" placeholder="Texto seleccionado..." />
 
-  <label class="small">Color</label>
-  <input type="color" id="textColor" value="#ffffff" />
+        <label class="small">Tamaño</label>
+        <input type="range" id="textSize" min="16" max="80" />
 
-  <button id="addTextBtn">Añadir texto</button>
-</div>
+        <label class="small">Color</label>
+        <input type="color" id="textColor" />
+
+        <button id="addTextBtn">Añadir texto</button>
+        <button id="deleteTextBtn">Eliminar texto</button>
+      </div>
 
       <div class="buttons">
         <button id="processBtn" class="primary">Exportar</button>
@@ -84,10 +86,10 @@
     <!-- PANEL DERECHO -->
     <div class="editor">
 
-    <div class="video-wrapper">
-  <video id="preview" controls></video>
-  <div id="textLayer"></div>
-</div>
+      <div class="video-wrapper">
+        <video id="preview" controls></video>
+        <div id="textLayer"></div>
+      </div>
 
       <div id="timelineContainer">
         <div id="timeline">
